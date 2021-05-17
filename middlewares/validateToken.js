@@ -17,7 +17,7 @@ const validateToken = async (req, res, next)=> {
           data: []
         });
       }
-      
+
       next();
     }else {
       res.status(401).send({
@@ -27,6 +27,7 @@ const validateToken = async (req, res, next)=> {
       });
     }
   }catch(error) {
+    console.log(error)
     res.status(500).json({
       success: false,
       message: "Internal server error",
