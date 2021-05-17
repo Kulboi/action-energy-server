@@ -49,6 +49,7 @@ class CustomerController {
 
   async all(req, res) {
     try {
+      console.log(req.query)
       const { limit, page } = req.query;
       const customers = await CustomerModel
       .find()
