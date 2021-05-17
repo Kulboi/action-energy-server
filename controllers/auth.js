@@ -67,7 +67,12 @@ class UserController {
             res.status(200).json({ 
               success: true,
               message: "User login successful",
-              data: { ...user, token }
+              data: {  
+                token,
+                fullname: user.fullname,
+                email: user.email,
+                id: user._id
+              }
             });
           } else {
             res.status(400).json({
