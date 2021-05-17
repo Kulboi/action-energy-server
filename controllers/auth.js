@@ -53,8 +53,9 @@ class UserController {
           if (validPassword) {
             // Create a token
             const payload = { 
+              id: user._id,
               user: user.fullname,
-              email: user.emaul 
+              email: user.email 
             };
             const options = { 
               expiresIn: '2d', 
