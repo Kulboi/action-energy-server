@@ -2,7 +2,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const projectSchema = new Schema({
-	agency_name: String,
+  date_of_creation: Date,
+	agency_name: Object,
 	ref_no: String,
 	description: String,
 	due_date: String,
