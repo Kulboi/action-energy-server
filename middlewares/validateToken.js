@@ -1,26 +1,38 @@
 const jwt = require('jsonwebtoken');
 
 const validateToken = async (req, res, next)=> {
-  if(req.headers.authorization) {
-    const options = { 
-      expiresIn: '2d', 
-      issuer: 'action-energy' 
-    };
-
-    try {
-      result = await jwt.verify(req.headers.authorization, process.env.JWT_SECRET, options);
+  try {
+    if(req.headers.authorization) {
+      const options = { 
+        expiresIn: '2d', 
+        issuer: 'action-energy' 
+      };
   
-      req.decoded = result;
+      result = await jwt.verify(req.headers.authorization, process.env.JWT_SECRET, options);
+      
+      if(!result) {
+        return res.status(400).send({
+          success: false,
+          messsage: "Invalid token.",
+          data: []
+        });
+      }
+      
       next();
-    } catch (err) {
-      throw new Error(err);
+    }else {
+      res.status(401).send({
+        success: false,
+        messsage: "Authentication error. Token required.",
+        data: []
+      });
     }
-  }else {
-    res.status(401).send({
+  }catch(error) {
+    res.status(500).json({
       success: false,
-      messsage: "Authentication error. Token required.",
+      message: "Internal server error",
       data: []
     });
+    throw new Error(error);
   }
 };
 
