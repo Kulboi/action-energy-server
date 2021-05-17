@@ -46,7 +46,7 @@ class UserController {
 
       const validate = await v.check();
       if(validate) {
-        const user = await UserModel.findOne({ email });
+        const user = await UserModel.find({ email });
         if (user) {
           // check user password with hashed password stored in the database
           const validPassword = await bcrypt.compare(password, user.password);
