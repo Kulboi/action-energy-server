@@ -38,5 +38,18 @@ router.route('/customers')
 router.route('/customers/activate')
     .put(validateToken, CustomerCtrl.reactivate)
 
+// Project Module
+const ProjectController = require('./../controllers/projects');
+const ProjectCtrl = new ProjectController();
+
+router.route('/projects')
+    .post(validateToken, ProjectCtrl.add)
+    .get(validateToken, ProjectCtrl.all)
+    .put(validateToken, ProjectCtrl.update)
+    .delete(validateToken, ProjectCtrl.disable);
+
+router.route('/projects/fund')
+    .put(validateToken, ProjectCtrl.fundProject)
+
 
 module.exports = router;

@@ -2,7 +2,7 @@ const ProjectModel = require("./../models/project");
 const { Validator } = require('node-input-validator');
 
 class CustomerController {
-  async create(req, res) {
+  async add(req, res) {
     try {
       const v = new Validator(req.body, {
         ref_no: 'required',
@@ -78,6 +78,19 @@ class CustomerController {
         message: "Updated project's details",
         data: req.body
       });
+    }catch (error) {
+      res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: []
+      });
+      throw new Error(error);
+    }
+  }
+
+  async disable(req, res) {
+    try {
+
     }catch (error) {
       res.status(500).json({
         success: false,
