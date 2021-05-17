@@ -2,9 +2,8 @@
 
 const router = require('express').Router();
 
-// Controllers
-const AuthController = require('./../controllers/auth');
-const AuthCtrl = new AuthController();
+// Middlewares
+const validateToken = require('./../middlewares/validateToken');
 
 router.get('', (req, res) => {
   res.status(200).json({
@@ -12,13 +11,32 @@ router.get('', (req, res) => {
   });
 });
 
-router.post('/register', (req, res) => {
-  AuthCtrl.register(req, res);
-});
+// Auth Module
+const AuthController = require('./../controllers/auth');
+const AuthCtrl = new AuthController();
 
-router.post('/login', (req, res) => {
-  AuthCtrl.login(req, res);
-});
+router.post('/register', AuthCtrl.register);
+router.post('/login', AuthCtrl.login);
+
+// User Module
+const UserController = require('./../controllers/user');
+const UserCtrl = new UserController();
+
+router.get('/users/:id', validateToken, UserCtrl.profile)
+router.put('/users/:id', validateToken, UserCtrl.update)
+
+// Customer Module
+const CustomerController = require('./../controllers/customers');
+const CustomerCtrl = new CustomerController();
+
+router.route('/customers')
+    .post(validateToken, CustomerCtrl.add)
+    .get(validateToken, CustomerCtrl.all)
+    .put(validateToken, CustomerCtrl.update)
+    .delete(validateToken, CustomerCtrl.disable);
+
+router.route('/customers/activate')
+    .put(validateToken, CustomerCtrl.reactivate)
 
 
 module.exports = router;
