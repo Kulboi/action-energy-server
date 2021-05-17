@@ -67,7 +67,7 @@ class UserController {
             res.status(200).json({ 
               success: true,
               message: "User login successful",
-              data: { token }
+              data: { ...user, token }
             });
           } else {
             res.status(400).json({

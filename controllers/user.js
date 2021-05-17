@@ -1,5 +1,4 @@
 const UserModel = require("./../models/user");
-const jwt = require('jsonwebtoken');
 
 class UserController {
   async profile(req, res) {
