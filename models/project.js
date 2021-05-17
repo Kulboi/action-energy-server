@@ -6,7 +6,8 @@ const projectSchema = new Schema({
 	agency_name: Object,
 	ref_no: String,
 	description: String,
-	due_date: String,
+  award_date: Date,
+	due_date: Date,
 	inflow: Number,
   balance: Number,
   status: {
