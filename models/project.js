@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const projectSchema = new Schema({
   date_of_creation: Date,
-	agency_name: Object,
+	agency: Object,
 	ref_no: String,
 	description: String,
   award_date: Date,
@@ -14,6 +14,13 @@ const projectSchema = new Schema({
     type: String,
     default: 'active'
   },
+  dynamicExpenses: [
+    {
+      title: String,
+      percentage: Number
+    }
+  ],
+  provisionalProfit: Number
 }, { timestamps: true });
 
 const Project = mongoose.model("project", projectSchema);

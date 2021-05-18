@@ -4,6 +4,7 @@ const router = require('express').Router();
 
 // Middlewares
 const validateToken = require('./../middlewares/validateToken');
+const calculateProvisionalProfit = require('./../middlewares/calculateProvisionalProfit');
 
 router.get('', (req, res) => {
   res.status(200).json({
@@ -43,7 +44,7 @@ const ProjectController = require('./../controllers/projects');
 const ProjectCtrl = new ProjectController();
 
 router.route('/projects')
-    .post(validateToken, ProjectCtrl.add)
+    .post(validateToken, calculateProvisionalProfit, ProjectCtrl.add)
     .get(validateToken, ProjectCtrl.all)
     .put(validateToken, ProjectCtrl.update)
     .delete(validateToken, ProjectCtrl.disable);
