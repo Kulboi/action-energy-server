@@ -47,10 +47,19 @@ router.route('/projects')
     .post(validateToken, calculateProvisionalProfit, ProjectCtrl.add)
     .get(validateToken, ProjectCtrl.all)
     .put(validateToken, ProjectCtrl.update)
-    .delete(validateToken, ProjectCtrl.disable);
 
-router.route('/projects/fund')
-    .put(validateToken, ProjectCtrl.fundProject)
+// Fund Request Module
+const FundManegementController = require('../controllers/fund-management');
+const FundManagementCtrl = new FundManegementController();
+
+router.post('/fund-management/request', validateToken, FundManagementCtrl.request);
+router.put('/fund-management/approve/:id', validateToken, FundManagementCtrl.approve);
+router.put('/fund-management/reject/:id', validateToken, FundManagementCtrl.reject);
+router.get('/fund-management/disbursed', validateToken, FundManagementCtrl.disbursements);
+
+router.route('/fund-managemen')
+    .get(validateToken, FundManagementCtrl.all)
+    .put(validateToken, FundManagementCtrl.update)
 
 
 module.exports = router;
