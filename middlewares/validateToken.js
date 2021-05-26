@@ -27,12 +27,20 @@ const validateToken = async (req, res, next)=> {
       });
     }
   }catch(error) {
+    if(error?.name === "TokenExpiredError") {
+      return res.status(400).json({
+        success: false,
+        message: "Token expired",
+        data: { ...error }
+      });
+    }
+
     res.status(500).json({
       success: false,
       message: "Internal server error",
       data: []
     });
-    throw new Error(error);
+    // throw new Error(error);
   }
 };
 
