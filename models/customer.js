@@ -14,5 +14,7 @@ const customerSchema = new Schema({
   }
 }, { timestamps: true });
 
+customerSchema.index({'$**': 'text'});
+
 const Customer = mongoose.model("customer", customerSchema);
 module.exports = Customer;

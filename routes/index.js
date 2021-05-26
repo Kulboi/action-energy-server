@@ -31,13 +31,15 @@ const CustomerController = require('./../controllers/customers');
 const CustomerCtrl = new CustomerController();
 
 router.route('/customers')
-    .post(validateToken, CustomerCtrl.add)
-    .get(validateToken, CustomerCtrl.all)
-    .put(validateToken, CustomerCtrl.update)
-    .delete(validateToken, CustomerCtrl.disable);
+  .post(validateToken, CustomerCtrl.add)
+  .get(validateToken, CustomerCtrl.all)
+  .put(validateToken, CustomerCtrl.update)
+  .delete(validateToken, CustomerCtrl.disable);
 
 router.route('/customers/activate')
-    .put(validateToken, CustomerCtrl.reactivate)
+  .put(validateToken, CustomerCtrl.reactivate)
+router.route('/customers/search')
+  .get(validateToken, CustomerCtrl.search)
 
 // Project Module
 const ProjectController = require('./../controllers/projects');
@@ -57,7 +59,7 @@ router.put('/fund-management/approve/:id', validateToken, FundManagementCtrl.app
 router.put('/fund-management/reject/:id', validateToken, FundManagementCtrl.reject);
 router.get('/fund-management/disbursed', validateToken, FundManagementCtrl.disbursements);
 
-router.route('/fund-managemen')
+router.route('/fund-management')
     .get(validateToken, FundManagementCtrl.all)
     .put(validateToken, FundManagementCtrl.update)
 
