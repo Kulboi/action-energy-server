@@ -49,7 +49,6 @@ class CustomerController {
 
   async all(req, res) {
     try {
-      console.log(req.query)
       const { limit, page } = req.query;
       const customers = await CustomerModel
       .find()
@@ -59,7 +58,10 @@ class CustomerController {
       res.status(200).json({
         success: true,
         message: "Registered customers",
-        data: customers
+        data: { 
+          payload: customers, 
+          count: await CustomerModel.countDocuments({}) 
+        }
       });
     }catch (error) {
       res.status(500).json({
