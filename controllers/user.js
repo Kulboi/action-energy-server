@@ -1,6 +1,49 @@
 const UserModel = require("./../models/user");
 
 class UserController {
+  async addUser(req, res) {
+    try {
+      const { email } = req.body;
+
+      const existing = await UserModel.find({ email });
+      if(existing.length) {
+        return res.status(409).json({
+          success: false,
+          message: "User already registered",
+          data: []
+        })
+      }
+
+      const v = new Validator(req.body, {
+        fullname: 'required',
+        email: 'required|email',
+        role: 'required',
+      });
+      const validate = await v.check();
+      if(!validate) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid or incomplete inputs",
+          data: v.errors
+        });
+      }
+
+      const addUser = await UserModel.create(req.body);
+      res.status(201).json({
+        success: true,
+        message: "User registeration successful",
+        data: addCustomer
+      })
+    }catch(error) {
+      res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: []
+      });
+      throw new Error(error);
+    }
+  }
+
   async profile(req, res) {
     try {
       const userId = req.params.id;

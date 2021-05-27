@@ -23,6 +23,7 @@ router.post('/login', AuthCtrl.login);
 const UserController = require('./../controllers/user');
 const UserCtrl = new UserController();
 
+router.post('/users', validateToken, UserCtrl.addUser)
 router.get('/users', validateToken, UserCtrl.getUsers)
 router.get('/users/:id', validateToken, UserCtrl.profile)
 router.put('/users/:id', validateToken, UserCtrl.update)
