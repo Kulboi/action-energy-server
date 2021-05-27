@@ -106,9 +106,49 @@ class UserController {
     }
   }
 
-  forgotPassword() {}
+  async changePassword(req, res) {
+    try {
+      const { userId } = req.params.id;
+      const { oldPassword, newPassword } = req.body;
+      const v = new Validator(req.body, {
+        oldPassword: 'required',
+        newPassword: 'required',
+      });
+      const validate = await v.check();
+      if(!validate) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid or incomplete inputs",
+          data: v.errors
+        });
+      }
 
-  resetPassword() {}
+      const user = await UserModel.findById(userId);
+      const compare_old = await bcrypt.compare(oldPassword, user.password);
+
+      if(!compare_old) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid old password",
+          data: []
+        });
+      }
+
+      await UserModel.findByIdAndUpdate(userId, { password: newPassword });
+      res.status(200).json({
+        success: true,
+        message: "Updated user's password",
+        data: []
+      });
+    }catch (error) {
+      console.log(error)
+      res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: []
+      })
+    }
+  }
 }
 
 module.exports = UserController;

@@ -18,6 +18,7 @@ const AuthCtrl = new AuthController();
 
 router.post('/register', AuthCtrl.register);
 router.post('/login', AuthCtrl.login);
+router.put('/change-password/:id', validateToken, AuthCtrl.changePassword);
 
 // User Module
 const UserController = require('./../controllers/user');
