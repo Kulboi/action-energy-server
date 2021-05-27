@@ -75,11 +75,10 @@ class CustomerController {
 
   async search(req, res) {
     try {
-      const { query, limit, page } = req.query;
+      const { query, limit } = req.query;
       const results = await CustomerModel
       .find({$text: {$search: query}})
       .limit(parseInt(limit))
-      .skip((parseInt(page) - 1) * parseInt(limit));
 
       res.status(200).json({
         success: true,
