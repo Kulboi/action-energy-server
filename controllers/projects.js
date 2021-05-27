@@ -6,13 +6,14 @@ class ProjectController {
     try {
       const v = new Validator(req.body, {
         ref_no: 'required',
-        agency: 'required|object',
-        date_of_creation: 'required',
-        description: 'required',
-        due_date: 'required',
         award_date: 'required',
-        balance: 'required',
-        dynamicExpenses: 'required|array'
+        description: 'required',
+        company_name: 'description',
+        agency: 'required|object',
+        location: 'required',
+        award_amount: 'required',
+        brief_of_summary: 'required',
+        deductables: 'required|array'
       });
       const validate = await v.check();
       if(!validate) {

@@ -2,25 +2,18 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const projectSchema = new Schema({
-  date_of_creation: Date,
-	agency: Object,
-	ref_no: String,
-	description: String,
+  ref_no: String,
   award_date: Date,
-	due_date: Date,
-	inflow: Number,
-  balance: Number,
-  status: {
-    type: String,
-    default: 'active'
+  description: String,
+  company_name: String,
+  agency: Object,
+  location: String,
+  award_amount: Number,
+  brief_of_summary: {
+    description: String,
+    file_path: String
   },
-  dynamicExpenses: [
-    {
-      title: String,
-      percentage: Number
-    }
-  ],
-  provisionalProfit: Number
+  deductables: Array,
 }, { timestamps: true });
 
 const Project = mongoose.model("project", projectSchema);
