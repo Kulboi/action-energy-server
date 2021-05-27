@@ -71,6 +71,7 @@ class UserController {
                 token,
                 fullname: user.fullname,
                 email: user.email,
+                role: user.role,
                 id: user._id
               }
             });
