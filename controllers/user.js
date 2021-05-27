@@ -29,6 +29,32 @@ class UserController {
     }
   }
 
+  async getUsers(req, res) {
+    try {
+      const { limit, page } = req.query;
+      const users = await UserModel
+      .find()
+      .limit(parseInt(limit))
+      .skip((parseInt(page) - 1) * parseInt(limit));
+
+      res.status(200).json({
+        success: true,
+        message: "System user's",
+        data: { 
+          payload: users, 
+          count: await UserModel.countDocuments({}) 
+        }
+      });
+    }catch(error) {
+      res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: []
+      });
+      throw new Error(error);
+    }
+  }
+
   async update(req, res) {
     try {
       const userId = req.params.id;

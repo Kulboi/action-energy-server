@@ -23,6 +23,7 @@ router.post('/login', AuthCtrl.login);
 const UserController = require('./../controllers/user');
 const UserCtrl = new UserController();
 
+router.get('/users', validateToken, UserCtrl.getUsers)
 router.get('/users/:id', validateToken, UserCtrl.profile)
 router.put('/users/:id', validateToken, UserCtrl.update)
 
@@ -32,7 +33,7 @@ const CustomerCtrl = new CustomerController();
 
 router.route('/customers')
   .post(validateToken, CustomerCtrl.add)
-  .get(validateToken, CustomerCtrl.all)
+  .get(validateToken, CustomerCtrl.getCustomers)
   .put(validateToken, CustomerCtrl.update)
   .delete(validateToken, CustomerCtrl.disable);
 
