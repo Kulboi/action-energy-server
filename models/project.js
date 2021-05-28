@@ -17,6 +17,10 @@ const projectSchema = new Schema({
   available_balance: {
     type: String,
     default: 0
+  },
+  actual_inflow: {
+    type: String,
+    default: 0
   }
 }, { timestamps: true });
 
