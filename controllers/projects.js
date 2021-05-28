@@ -12,7 +12,7 @@ class ProjectController {
         agency: 'required|object',
         location: 'required',
         award_amount: 'required',
-        brief_of_summary: 'required',
+        brief_of_summary: 'required|object',
         deductables: 'required|array'
       });
       const validate = await v.check();
