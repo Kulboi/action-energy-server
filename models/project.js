@@ -14,6 +14,10 @@ const projectSchema = new Schema({
     file_path: String
   },
   deductables: Array,
+  available_balance: {
+    type: String,
+    default: 0
+  }
 }, { timestamps: true });
 
 const Project = mongoose.model("project", projectSchema);
