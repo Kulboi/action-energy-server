@@ -8,7 +8,7 @@ class ProjectController {
         ref_no: 'required',
         award_date: 'required',
         description: 'required',
-        company_name: 'description',
+        company_name: 'required',
         agency: 'required|object',
         location: 'required',
         award_amount: 'required',
