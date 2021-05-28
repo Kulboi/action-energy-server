@@ -73,6 +73,31 @@ class ProjectController {
     }
   }
 
+  async search(req, res) {
+    try {
+      const { query, limit } = req.query;
+      const results = await ProjectModel
+      .find({$text: {$search: query}})
+      .limit(parseInt(limit))
+
+      res.status(200).json({
+        success: true,
+        message: `Results for search query: ${query}`,
+        data: {
+          payload: results,
+          count: results.length
+        }
+      })
+    }catch (error) {
+      res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: []
+      });
+      throw new Error(error);
+    }
+  }
+
   async update(req, res) {
     try {
       await ProjectModel.updateOne({ _id: req.query.id }, req.body);

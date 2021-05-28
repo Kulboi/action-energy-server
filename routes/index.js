@@ -49,9 +49,12 @@ const ProjectController = require('./../controllers/projects');
 const ProjectCtrl = new ProjectController();
 
 router.route('/projects')
-    .post(validateToken, ProjectCtrl.add)
-    .get(validateToken, ProjectCtrl.all)
-    .put(validateToken, ProjectCtrl.update)
+  .post(validateToken, ProjectCtrl.add)
+  .get(validateToken, ProjectCtrl.all)
+  .put(validateToken, ProjectCtrl.update);
+
+router.route('/projects/search')
+  .get(validateToken, ProjectCtrl.search)
 
 // Fund Request Module
 const FundManegementController = require('../controllers/fund-management');

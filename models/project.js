@@ -24,5 +24,7 @@ const projectSchema = new Schema({
   }
 }, { timestamps: true });
 
+projectSchema.index({'$**': 'text'});
+
 const Project = mongoose.model("project", projectSchema);
 module.exports = Project;
