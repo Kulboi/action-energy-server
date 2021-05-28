@@ -49,7 +49,7 @@ const ProjectController = require('./../controllers/projects');
 const ProjectCtrl = new ProjectController();
 
 router.route('/projects')
-    .post(validateToken, calculateProvisionalProfit, ProjectCtrl.add)
+    .post(validateToken, ProjectCtrl.add)
     .get(validateToken, ProjectCtrl.all)
     .put(validateToken, ProjectCtrl.update)
 
