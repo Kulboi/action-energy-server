@@ -61,7 +61,10 @@ class ProjectController {
       res.status(200).json({
         success: true,
         message: "Registered projects",
-        data: projects
+        data: {
+          payload: projects, 
+          count: await ProjectModel.countDocuments({})
+        }
       });
     }catch (error) {
       res.status(500).json({
