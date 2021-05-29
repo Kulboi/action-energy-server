@@ -68,8 +68,18 @@ router.put('/fund-management/reject/:id', validateToken, FundManagementCtrl.reje
 router.get('/fund-management/disbursed', validateToken, FundManagementCtrl.disbursements);
 
 router.route('/fund-management')
-    .get(validateToken, FundManagementCtrl.all)
-    .put(validateToken, FundManagementCtrl.update)
+  .get(validateToken, FundManagementCtrl.all)
+  .put(validateToken, FundManagementCtrl.update)
+
+// Fund Disbursements
+const DisbursementController = require('./../controllers/disbursements');
+const DisbursementCtrl = new DisbursementController();
+
+router.route('/disbursements')
+  .post(validateToken, DisbursementCtrl.add)
+  .get(validateToken, DisbursementCtrl.all)
+  .put(validateToken, DisbursementCtrl.update)
+  .delete(validateToken, DisbursementCtrl.remove);
 
 
 module.exports = router;

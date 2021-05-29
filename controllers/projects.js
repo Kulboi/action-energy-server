@@ -119,9 +119,10 @@ class ProjectController {
       projects.forEach(project => {
         allDeductables.push(...project.deductables)
       });
-      const total_expensed = allDeductables.reduce((sum, current) => {
+      const total_expenses = allDeductables.reduce((sum, current) => {
         return sum + parseFloat(current.value);
       }, 0);
+      const total_expensed = total_expenses/100 *
 
       res.status(500).json({
         success: false,
@@ -129,7 +130,6 @@ class ProjectController {
         data: {
           total_projects,
           total_inflow: total_inflow[0].count,
-          allDeductables,
           total_expensed
         }
       });
