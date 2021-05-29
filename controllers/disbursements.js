@@ -40,9 +40,9 @@ class DisbursementController {
 
   async all(req, res) {
     try {
-      const { limit, page } = req.query;
+      const { projectId, limit, page } = req.query;
       const disbursements = await DisbursementModel
-      .find()
+      .find({ 'project._id': projectId })
       .limit(parseInt(limit))
       .skip((parseInt(page) - 1) * parseInt(limit));
 
