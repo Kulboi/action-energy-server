@@ -21,8 +21,13 @@ const projectSchema = new Schema({
   actual_inflow: {
     type: String,
     default: 0
+  },
+  total_expensed: {
+    type: String,
+    default: 0
   }
-}, { timestamps: true });
+}, 
+{ timestamps: true });
 
 projectSchema.index({'$**': 'text'});
 

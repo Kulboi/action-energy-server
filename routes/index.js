@@ -55,6 +55,8 @@ router.route('/projects')
 
 router.route('/projects/search')
   .get(validateToken, ProjectCtrl.search)
+router.route('/projects/statistics')
+  .get(validateToken, ProjectCtrl.statistics)
 
 // Fund Request Module
 const FundManegementController = require('../controllers/fund-management');

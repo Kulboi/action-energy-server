@@ -101,6 +101,48 @@ class ProjectController {
     }
   }
 
+  async statistics(req, res) {
+    try {
+      const total_projects = await ProjectModel.countDocuments({});
+      const total_inflow = await ProjectModel.aggregate([
+        {
+          $group: {
+            _id: null,
+            count: { $sum: "$award_amount" }
+          }
+        }
+      ]);
+
+      // Calculating total expensed
+      const projects = await ProjectModel.find({});
+      const allDeductables = []
+      projects.forEach(project => {
+        allDeductables.push(...project.deductables)
+      });
+      const total_expensed = allDeductables.reduce((sum, current) => {
+        return sum + parseFloat(current.value);
+      }, 0);
+
+      res.status(500).json({
+        success: false,
+        message: "Projects statistics",
+        data: {
+          total_projects,
+          total_inflow: total_inflow[0].count,
+          allDeductables,
+          total_expensed
+        }
+      });
+    }catch (error) {
+      res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: []
+      });
+      throw new Error(error);
+    }
+  }
+
   async update(req, res) {
     try {
       await ProjectModel.updateOne({ _id: req.query.id }, req.body);
