@@ -23,7 +23,18 @@ class DisbursementController {
         });
       }
 
+      const project = await ProjectModel.find({ _id: projectId });
+      if(req.body.amount > project.available_balance) {
+        return res.status(400).json({
+          success: false,
+          message: "Amount greater than available balance",
+          data: v.errors
+        });
+      }
+
       const addItem = await DisbursementModel.create(req.body);
+      const currentBalance = project.available_balance - req.body.amount;
+      await ProjectModel.updateOne({ _id: project._id }, { available_balance: currentBalance });
       res.status(201).json({
         success: true,
         message: "Disbursement recorded successful",
@@ -42,7 +53,7 @@ class DisbursementController {
   async all(req, res) {
     try {
       const { projectId, limit, page } = req.query;
-      
+
       const project = await ProjectModel.find({ _id: projectId });
       if(project.actual_inflow === 0) {
         return res.status(200).json({
