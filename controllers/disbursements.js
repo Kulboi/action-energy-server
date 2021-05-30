@@ -1,4 +1,5 @@
 const DisbursementModel = require("./../models/disbursement");
+const ProjectModel = require("./../models/project");
 const { Validator } = require("node-input-validator");
 
 class DisbursementController {
@@ -41,6 +42,17 @@ class DisbursementController {
   async all(req, res) {
     try {
       const { projectId, limit, page } = req.query;
+      
+      const project = await ProjectModel.find({ _id: projectId });
+      if(project.actual_inflow === 0) {
+        return res.status(200).json({
+          success: true,
+          message: "No actual inflow recorded",
+          data: []
+        });
+      }
+
+
       const disbursements = await DisbursementModel
       .find({ 'project._id': projectId })
       .limit(parseInt(limit))
@@ -51,7 +63,9 @@ class DisbursementController {
         message: "Recorded disbursements",
         data: {
           payload: disbursements, 
-          count: await DisbursementModel.countDocuments({})
+          count: await DisbursementModel.countDocuments({}),
+          actual_inflow: project.actual_inflow,
+          available_balance: project.available_balance
         }
       });
     } catch (error) {
