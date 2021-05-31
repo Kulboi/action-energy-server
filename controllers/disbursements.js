@@ -55,6 +55,7 @@ class DisbursementController {
       const { projectId, limit, page } = req.query;
 
       const project = await ProjectModel.find({ _id: projectId });
+      console.log(project)
       if(project.actual_inflow === 0) {
         return res.status(200).json({
           success: true,
@@ -68,7 +69,8 @@ class DisbursementController {
       .find({ 'project._id': projectId })
       .limit(parseInt(limit))
       .skip((parseInt(page) - 1) * parseInt(limit));
-
+      console.log(`project inflow: ${project.actual_inflow}`)
+      console.log(`project inflow: ${project.available_balance}`)
       res.status(200).json({
         success: true,
         message: "Recorded disbursements",
