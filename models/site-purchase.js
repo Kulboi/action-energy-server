@@ -5,7 +5,6 @@ const sitePurchaseSchema = new Schema({
   date: Date,
   site_number: String,
   location: String,
-  bank: String,
   recipient: String,
   amount: Number,
   project: Object,

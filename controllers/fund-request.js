@@ -97,7 +97,7 @@ class FundRequestController {
       await FundRequestModel.findByIdAndUpdate({ _id: req.query.id }, req.body);
       res.status(200).json({
         success: true,
-        message: "Request successfully updated",
+        message: "Record successfully updated",
         data: req.body
       });
     }catch (error) {

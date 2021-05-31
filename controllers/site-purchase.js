@@ -8,7 +8,6 @@ class SitePurchaseController {
         date: 'required',
         location: 'required',
         site_number: 'required',
-        bank: 'required',
         recipient: 'required',
         amount: 'required',
         project: 'required|object',
