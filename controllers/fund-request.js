@@ -14,7 +14,6 @@ class FundRequestController {
         location: 'required',
         description: 'required',
         amount: 'required',
-        requested_by: 'required|object'
       });
       const validate = await v.check();
       if(!validate) {
