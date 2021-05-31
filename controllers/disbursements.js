@@ -69,6 +69,7 @@ class DisbursementController {
       .limit(parseInt(limit))
       .skip((parseInt(page) - 1) * parseInt(limit));
 
+      console.log(project)
       res.status(200).json({
         success: true,
         message: "Recorded disbursements",
