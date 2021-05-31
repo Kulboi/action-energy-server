@@ -47,6 +47,11 @@ class SitePurchaseController {
       .limit(parseInt(limit))
       .skip((parseInt(page) - 1) * parseInt(limit));
 
+      console.log({ 
+        payload: requests, 
+        count: await SitePurchaseModel.countDocuments({}) 
+      })
+
       res.status(200).json({
         success: true,
         message: "Records",
