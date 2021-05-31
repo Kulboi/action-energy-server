@@ -58,16 +58,6 @@ router.route('/projects/search')
 router.route('/projects/statistics')
   .get(validateToken, ProjectCtrl.statistics)
 
-// Fund Request Module
-const FundRequestController = require('../controllers/fund-request');
-const FundRequestCtrl = new FundRequestController();
-
-router.route('/fund-requests')
-  .post(validateToken, FundRequestCtrl.add)
-  .get(validateToken, FundRequestCtrl.all)
-  .put(validateToken, FundRequestCtrl.update)
-  .delete(validateToken, FundRequestCtrl.remove);
-
 // Fund Disbursements Module
 const DisbursementController = require('./../controllers/disbursements');
 const DisbursementCtrl = new DisbursementController();
@@ -101,6 +91,18 @@ router.route('/site-purchase')
   .delete(validateToken, SitePurchaseCtrl.remove);
 
 router.get('/site-purchase/search', validateToken, SitePurchaseCtrl.search);
+
+// Fund Request
+const FundRequestController = require('./../controllers/fund-request');
+const FundRequestCtrl = new FundRequestController();
+
+router.route('/fund-request')
+  .post(validateToken, FundRequestCtrl.add)
+  .get(validateToken, FundRequestCtrl.all)
+  .put(validateToken, FundRequestCtrl.update)
+  .delete(validateToken, FundRequestCtrl.remove);
+
+router.get('/fund-request/search', validateToken, FundRequestCtrl.search);
 
 
 module.exports = router;
