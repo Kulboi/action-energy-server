@@ -116,10 +116,11 @@ class ProjectController {
       // Calculating total expensed
       const projects = await ProjectModel.find({});
       const total_expensed = projects.reduce((sum, current) => {
+        console.log(current.total_expensed)
         return sum + parseFloat(current.total_expensed);
       }, 0);
 
-      res.status(500).json({
+      res.status(200).json({
         success: false,
         message: "Projects statistics",
         data: {
@@ -129,7 +130,6 @@ class ProjectController {
         }
       });
     }catch (error) {
-      console.log(error)
       res.status(500).json({
         success: false,
         message: "Internal server error",
