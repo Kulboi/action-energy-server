@@ -59,19 +59,16 @@ router.route('/projects/statistics')
   .get(validateToken, ProjectCtrl.statistics)
 
 // Fund Request Module
-const FundManegementController = require('../controllers/fund-management');
-const FundManagementCtrl = new FundManegementController();
+const FundRequestController = require('../controllers/fund-request');
+const FundRequestCtrl = new FundRequestController();
 
-router.post('/fund-management/request', validateToken, FundManagementCtrl.request);
-router.put('/fund-management/approve/:id', validateToken, FundManagementCtrl.approve);
-router.put('/fund-management/reject/:id', validateToken, FundManagementCtrl.reject);
-router.get('/fund-management/disbursed', validateToken, FundManagementCtrl.disbursements);
+router.route('/fund-requests')
+  .post(validateToken, FundRequestCtrl.add)
+  .get(validateToken, FundRequestCtrl.all)
+  .put(validateToken, FundRequestCtrl.update)
+  .delete(validateToken, FundRequestCtrl.remove);
 
-router.route('/fund-management')
-  .get(validateToken, FundManagementCtrl.all)
-  .put(validateToken, FundManagementCtrl.update)
-
-// Fund Disbursements
+// Fund Disbursements Module
 const DisbursementController = require('./../controllers/disbursements');
 const DisbursementCtrl = new DisbursementController();
 
@@ -80,6 +77,26 @@ router.route('/disbursements')
   .get(validateToken, DisbursementCtrl.all)
   .put(validateToken, DisbursementCtrl.update)
   .delete(validateToken, DisbursementCtrl.remove);
+
+// Payment Requests Module
+const PaymentRequestController = require('./../controllers/payment-request');
+const PaymentRequestCtrl = new PaymentRequestController();
+
+router.route('/payment-requests')
+  .post(validateToken, PaymentRequestCtrl.add)
+  .get(validateToken, PaymentRequestCtrl.all)
+  .put(validateToken, PaymentRequestCtrl.update)
+  .delete(validateToken, PaymentRequestCtrl.remove);
+
+// Payment Requests Module
+const SitePurchaseController = require('./../controllers/site-purchase');
+const SitePurchaseCtrl = new SitePurchaseController();
+
+router.route('/payment-requests')
+  .post(validateToken, SitePurchaseCtrl.add)
+  .get(validateToken, SitePurchaseCtrl.all)
+  .put(validateToken, SitePurchaseCtrl.update)
+  .delete(validateToken, SitePurchaseCtrl.remove);
 
 
 module.exports = router;
