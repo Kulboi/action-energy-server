@@ -33,7 +33,7 @@ class DisbursementController {
       }
 
       const addItem = await DisbursementModel.create(req.body);
-      const currentBalance = project.available_balance - req.body.amount;
+      const currentBalance = parseFloat(project.available_balance) - parseFloat(req.body.amount);
       await ProjectModel.updateOne({ _id: req.body.project._id }, { available_balance: currentBalance });
       res.status(201).json({
         success: true,
@@ -55,7 +55,6 @@ class DisbursementController {
       const { projectId, limit, page } = req.query;
 
       const project = await ProjectModel.find({ _id: projectId });
-      console.log(project)
       if(project.actual_inflow === 0) {
         return res.status(200).json({
           success: true,
@@ -70,15 +69,15 @@ class DisbursementController {
       .limit(parseInt(limit))
       .skip((parseInt(page) - 1) * parseInt(limit));
       console.log(`project inflow: ${project.actual_inflow}`)
-      console.log(`project inflow: ${project.available_balance}`)
+      console.log(`project balance: ${project.available_balance}`)
       res.status(200).json({
         success: true,
         message: "Recorded disbursements",
         data: {
           payload: disbursements, 
           count: await DisbursementModel.countDocuments({}),
-          actual_inflow: project.actual_inflow,
-          available_balance: project.available_balance
+          actual_inflow: project[0].actual_inflow,
+          available_balance: project[0].available_balance
         }
       });
     } catch (error) {
