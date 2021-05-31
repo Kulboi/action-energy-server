@@ -115,14 +115,9 @@ class ProjectController {
 
       // Calculating total expensed
       const projects = await ProjectModel.find({});
-      const allDeductables = []
-      projects.forEach(project => {
-        allDeductables.push(...project.deductables)
-      });
-      const total_expenses = allDeductables.reduce((sum, current) => {
-        return sum + parseFloat(current.value);
+      const total_expensed = projects.reduce((sum, current) => {
+        return sum + parseFloat(current.total_expensed);
       }, 0);
-      const total_expensed = total_expenses/100 *
 
       res.status(500).json({
         success: false,
