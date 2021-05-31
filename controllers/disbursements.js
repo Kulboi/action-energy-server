@@ -23,7 +23,7 @@ class DisbursementController {
         });
       }
 
-      const project = await ProjectModel.find({ _id: projectId });
+      const project = await ProjectModel.find({ _id: req.body.project._id });
       if(req.body.amount > project.available_balance) {
         return res.status(400).json({
           success: false,
