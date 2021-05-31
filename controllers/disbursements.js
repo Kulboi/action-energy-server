@@ -34,7 +34,7 @@ class DisbursementController {
 
       const addItem = await DisbursementModel.create(req.body);
       const currentBalance = parseFloat(project.available_balance) - parseFloat(req.body.amount);
-      await ProjectModel.updateOne({ _id: req.body.project._id }, { available_balance: 18700000 });
+      await ProjectModel.updateOne({ _id: req.body.project._id }, { available_balance: currentBalance });
       res.status(201).json({
         success: true,
         message: "Disbursement recorded successful",
