@@ -88,6 +88,8 @@ router.route('/payment-requests')
   .put(validateToken, PaymentRequestCtrl.update)
   .delete(validateToken, PaymentRequestCtrl.remove);
 
+router.get('/payment-requests/search', validateToken, PaymentRequestCtrl.search);
+
 // Site Purchase Requests Module
 const SitePurchaseController = require('./../controllers/site-purchase');
 const SitePurchaseCtrl = new SitePurchaseController();
@@ -97,6 +99,8 @@ router.route('/site-purchase')
   .get(validateToken, SitePurchaseCtrl.all)
   .put(validateToken, SitePurchaseCtrl.update)
   .delete(validateToken, SitePurchaseCtrl.remove);
+
+router.get('/site-purchase/search', validateToken, SitePurchaseCtrl.search);
 
 
 module.exports = router;
