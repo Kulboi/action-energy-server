@@ -57,6 +57,8 @@ router.route('/projects/search')
   .get(validateToken, ProjectCtrl.search)
 router.route('/projects/statistics')
   .get(validateToken, ProjectCtrl.statistics)
+router.route('/projects/top')
+  .get(validateToken, ProjectCtrl.topProjects)
 
 // Fund Disbursements Module
 const DisbursementController = require('./../controllers/disbursements');

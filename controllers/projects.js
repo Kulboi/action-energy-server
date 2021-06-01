@@ -138,6 +138,28 @@ class ProjectController {
     }
   }
 
+  async topProjects(req, res) {
+    try {
+      const top_ten = await ProjectModel
+        .find()
+        .sort('-available_balance')
+        .limit(10)
+
+      res.status(200).json({
+        success: false,
+        message: "Top 10 projects by available balance",
+        data: top_ten
+      });
+    }catch(error) {
+      res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: []
+      });
+      throw new Error(error);
+    }
+  }
+
   async update(req, res) {
     try {
       await ProjectModel.updateOne({ _id: req.query.id }, req.body);
