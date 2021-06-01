@@ -68,7 +68,7 @@ class DisbursementController {
         message: "Recorded disbursements",
         data: {
           payload: disbursements, 
-          count: await DisbursementModel.countDocuments({}),
+          count: await DisbursementModel.countDocuments({ 'project._id': projectId }),
           actual_inflow: project[0].actual_inflow,
           available_balance: project[0].available_balance
         }
