@@ -4,7 +4,7 @@ const router = require('express').Router();
 
 // Middlewares
 const validateToken = require('./../middlewares/validateToken');
-const calculateProvisionalProfit = require('./../middlewares/calculateProvisionalProfit');
+const validateDisbursement = require('./../middlewares/validateDisbursement');
 
 router.get('', (req, res) => {
   res.status(200).json({
@@ -63,7 +63,7 @@ const DisbursementController = require('./../controllers/disbursements');
 const DisbursementCtrl = new DisbursementController();
 
 router.route('/disbursements')
-  .post(validateToken, DisbursementCtrl.add)
+  .post(validateToken, validateDisbursement, DisbursementCtrl.add)
   .get(validateToken, DisbursementCtrl.all)
   .put(validateToken, DisbursementCtrl.update)
   .delete(validateToken, DisbursementCtrl.remove);

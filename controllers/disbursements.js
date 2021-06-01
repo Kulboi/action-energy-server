@@ -1,8 +1,13 @@
 const DisbursementModel = require("./../models/disbursement");
 const ProjectModel = require("./../models/project");
 const { Validator } = require("node-input-validator");
+const events = require('events'); 
 
 class DisbursementController {
+  constructor() {
+    const eventsEmitter = new events.EventEmitter();
+  }
+
   async add(req, res) {
     try {
       const v = new Validator(req.body, {
@@ -23,18 +28,8 @@ class DisbursementController {
         });
       }
 
-      const project = await ProjectModel.find({ _id: req.body.project._id });
-      if(req.body.amount > project.available_balance) {
-        return res.status(400).json({
-          success: false,
-          message: "Amount greater than available balance",
-          data: v.errors
-        });
-      }
-
       const addItem = await DisbursementModel.create(req.body);
-      const currentBalance = parseFloat(project[0].available_balance) - parseFloat(req.body.amount);
-      await ProjectModel.updateOne({ _id: req.body.project._id }, { available_balance: currentBalance });
+      this.eventsEmitter.emit('disbursements:create', req.body);
       res.status(201).json({
         success: true,
         message: "Disbursement recorded successful",

@@ -115,7 +115,6 @@ class ProjectController {
 
       // Calculating total expensed
       const projects = await ProjectModel.find({});
-      console.log(projects?.total_expensed)
       const total_expensed = projects.reduce((sum, current) => {
         return sum + parseFloat(current.total_expensed);
       }, 0);
