@@ -142,7 +142,7 @@ class ProjectController {
     try {
       const top_ten = await ProjectModel
         .find()
-        .sort('-available_balance')
+        .sort({ available_balance: -1 })
         .limit(10)
 
       res.status(200).json({
