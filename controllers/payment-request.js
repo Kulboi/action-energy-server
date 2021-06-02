@@ -8,6 +8,7 @@ class PaymentRequestController {
         date: 'required',
         payee: 'required',
         site_number: 'required',
+        amount: 'required',
         type: 'required'
       });
       const validate = await v.check();

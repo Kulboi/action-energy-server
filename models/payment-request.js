@@ -5,6 +5,7 @@ const paymentRequestSchema = new Schema({
   date: Date,
   payee: String,
   site_number: String,
+  amount: Number,
   type: String,
 }, 
 { timestamps: true });
