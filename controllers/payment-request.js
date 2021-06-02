@@ -4,6 +4,7 @@ const { Validator } = require('node-input-validator');
 const json2csv = require('json2csv').parse;
 const fs = require('fs');
 const path = require('path');
+const randomString = require('./../helpers/randomString');
 
 class PaymentRequestController {
   async add(req, res) {
@@ -148,8 +149,8 @@ class PaymentRequestController {
         'updatedAt'
       ]
       const csv = json2csv(records, { fields });
-      const datetime = new Date();
-      const filePath = path.join(__dirname, "..", "public", "exports", `csv-${datetime}.csv`);
+      const randomString = randomString();
+      const filePath = path.join(__dirname, "..", "public", "exports", `csv-${randomString}.csv`);
       fs.writeFile(filePath, csv, function (err) {
         if (err) {
           return res.json(err).status(500);
@@ -162,7 +163,7 @@ class PaymentRequestController {
             success: true,
             message: `Records for date range: ${startDate} - ${endDate}`,
             data: {
-              link: `/exports/csv-${datetime}.csv`
+              link: `/exports/csv-${randomString}.csv`
             }
           });
         }
