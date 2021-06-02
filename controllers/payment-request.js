@@ -1,6 +1,10 @@
 const PaymentRequestModel = require("./../models/payment-request");
 const { Validator } = require('node-input-validator');
 
+const json2csv = require('json2csv').parse;
+const fs = require('fs');
+const path = require('path');
+
 class PaymentRequestController {
   async add(req, res) {
     try {
@@ -112,6 +116,56 @@ class PaymentRequestController {
         success: true,
         message: "Request deleted",
         data: []
+      });
+    }catch (error) {
+      res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: []
+      });
+      throw new Error(error);
+    }
+  }
+
+  async downloadRecords(req, res) {
+    try {
+      const { startDate, endDate } = req.query;
+      const records = await PaymentRequestModel.find({
+        createdAt: {
+          $gte: new Date(new Date(startDate)),
+          $lte: new Date(new Date(endDate))
+        }
+      })
+
+      const fields = [
+        'id',
+        'date',
+        'payee',
+        'site_number',
+        'amount',
+        'type',
+        'createdAt',
+        'updatedAt'
+      ]
+      const csv = json2csv(records, { fields });
+      const datetime = new Date();
+      const filePath = path.join(__dirname, "..", "public", "exports", `csv-${datetime}.csv`);
+      fs.writeFile(filePath, csv, function (err) {
+        if (err) {
+          return res.json(err).status(500);
+        }
+        else {
+          setTimeout(function () {
+            fs.unlinkSync(filePath);
+          }, 60000)
+          res.status(200).json({
+            success: true,
+            message: `Records for date range: ${startDate} - ${endDate}`,
+            data: {
+              link: `/exports/csv-${datetime}.csv`
+            }
+          });
+        }
       });
     }catch (error) {
       res.status(500).json({
