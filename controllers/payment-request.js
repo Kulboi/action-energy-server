@@ -152,7 +152,6 @@ class PaymentRequestController {
       const randomStr = randomString();
       const filePath = path.join(__dirname, "..", "public", "exports", `csv-${randomStr}.csv`);
       fs.writeFile(filePath, csv, function (err) {
-        console.log(filepath)
         if (err) {
           return res.status(500).json({
             success: false,
@@ -162,6 +161,8 @@ class PaymentRequestController {
             }
           });
         }
+
+        console.log(filepath)
         setTimeout(function () {
           fs.unlinkSync(filePath);
         }, 500000)
@@ -169,7 +170,7 @@ class PaymentRequestController {
           success: true,
           message: `Records for date range: ${startDate} - ${endDate}`,
           data: {
-            link: `/exports/csv-${randomStr}.csv`
+            link: filePath
           }
         });
       });
