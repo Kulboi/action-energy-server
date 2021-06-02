@@ -7,10 +7,6 @@ const path = require('path');
 const randomString = require('./../helpers/randomString');
 
 class PaymentRequestController {
-  constructor() {
-    this.randomString = randomString();
-  }
-
   async add(req, res) {
     try {
       const v = new Validator(req.body, {
@@ -153,8 +149,8 @@ class PaymentRequestController {
         'updatedAt'
       ]
       const csv = json2csv(records, { fields });
-      const randomString = this.randomString;
-      const filePath = path.join(__dirname, "..", "public", "exports", `csv-${randomString}.csv`);
+      const randomStr = randomString();
+      const filePath = path.join(__dirname, "..", "public", "exports", `csv-${randomStr}.csv`);
       fs.writeFile(filePath, csv, function (err) {
         if (err) {
           return res.json(err).status(500);
@@ -167,7 +163,7 @@ class PaymentRequestController {
             success: true,
             message: `Records for date range: ${startDate} - ${endDate}`,
             data: {
-              link: `/exports/csv-${randomString}.csv`
+              link: `/exports/csv-${randomStr}.csv`
             }
           });
         }
