@@ -150,7 +150,7 @@ class PaymentRequestController {
       ]
       const csv = json2csv(records, { fields });
       const randomStr = randomString();
-      const filePath = path.join(__dirname, "..", "public", "exports", `csv-${randomStr}.csv`);
+      const filePath = `csv-${randomStr}.csv`;
       fs.writeFile(filePath, csv, function (err) {
         if (err) {
           return res.status(500).json({
@@ -162,7 +162,6 @@ class PaymentRequestController {
           });
         }
 
-        console.log(filepath)
         setTimeout(function () {
           fs.unlinkSync(filePath);
         }, 500000)
