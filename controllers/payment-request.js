@@ -3,7 +3,6 @@ const { Validator } = require('node-input-validator');
 
 const json2csv = require('json2csv').parse;
 const fs = require('fs');
-const path = require('path');
 const randomString = require('./../helpers/randomString');
 
 class PaymentRequestController {
@@ -148,9 +147,10 @@ class PaymentRequestController {
         'createdAt',
         'updatedAt'
       ]
+      
       const csv = json2csv(records, { fields });
       const randomStr = randomString();
-      const filePath = `csv-${randomStr}.csv`;
+      const filePath = `payment-request-csv-${randomStr}.csv`;
       fs.writeFile(filePath, csv, function (err) {
         if (err) {
           return res.status(500).json({

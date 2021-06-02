@@ -1,6 +1,10 @@
 const SitePurchaseModel = require("./../models/site-purchase");
 const { Validator } = require('node-input-validator');
 
+const json2csv = require('json2csv').parse;
+const fs = require('fs');
+const randomString = require('./../helpers/randomString');
+
 class SitePurchaseController {
   async add(req, res) {
     try {
@@ -120,6 +124,65 @@ class SitePurchaseController {
         success: true,
         message: "Record deleted",
         data: []
+      });
+    }catch (error) {
+      res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: []
+      });
+      throw new Error(error);
+    }
+  }
+
+  async downloadRecords(req, res) {
+    try {
+      const { startDate, endDate } = req.query;
+      const records = await SitePurchaseModel.find({
+        createdAt: {
+          $gte: new Date(new Date(startDate)),
+          $lte: new Date(new Date(endDate))
+        }
+      })
+
+      const fields = [
+        'id',
+        'date',
+        'site_number',
+        'location',
+        'recipient',
+        'amount',
+        'project',
+        'payee',
+        'type',
+        'createdAt',
+        'updatedAt'
+      ];
+      
+      const csv = json2csv(records, { fields });
+      const randomStr = randomString();
+      const filePath = `site-purchase-csv-${randomStr}.csv`;
+      fs.writeFile(filePath, csv, function (err) {
+        if (err) {
+          return res.status(500).json({
+            success: false,
+            message: "Internal server error",
+            data: {
+              message: err
+            }
+          });
+        }
+
+        // setTimeout(function () {
+        //   fs.unlinkSync(filePath);
+        // }, 500000)
+        res.status(200).json({
+          success: true,
+          message: `Records for date range: ${startDate} - ${endDate}`,
+          data: {
+            link: filePath
+          }
+        });
       });
     }catch (error) {
       res.status(500).json({

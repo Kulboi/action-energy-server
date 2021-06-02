@@ -94,6 +94,7 @@ router.route('/site-purchase')
   .delete(validateToken, SitePurchaseCtrl.remove);
 
 router.get('/site-purchase/search', validateToken, SitePurchaseCtrl.search);
+router.get('/site-purchase/download-records', validateToken, SitePurchaseCtrl.downloadRecords);
 
 // Fund Request
 const FundRequestController = require('./../controllers/fund-request');
@@ -106,6 +107,6 @@ router.route('/fund-request')
   .delete(validateToken, FundRequestCtrl.remove);
 
 router.get('/fund-request/search', validateToken, FundRequestCtrl.search);
-
+router.get('/fund-request/download-records', validateToken, FundRequestCtrl.downloadRecords);
 
 module.exports = router;
