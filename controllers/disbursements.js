@@ -30,6 +30,10 @@ class DisbursementController {
 
       const addItem = await DisbursementModel.create(req.body);
       this.eventsEmitter.emit('disbursements:create', req.body);
+      this.eventsEmitter.emit('record:create', {
+        type: 'disbursement',
+        payload: req.body
+      });
       res.status(201).json({
         success: true,
         message: "Disbursement recorded successful",

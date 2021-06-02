@@ -1,6 +1,8 @@
 const events = require('events');
 const ProjectModel = require("./models/project");
 
+const notifyAdmin = require('./helpers/notifyAdminMail');
+
 const eventsEmitter = new events.EventEmitter();
 
 /*
@@ -25,4 +27,9 @@ eventsEmitter.on('disbursements:create', async(payload)=> {
     available_balance: currentBalance,
     total_expensed
   });
+});
+
+// On record create event
+eventsEmitter.on('record:create', async({ type, payload })=> { 
+  notifyAdmin({ type, payload });
 });
