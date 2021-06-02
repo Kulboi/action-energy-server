@@ -162,9 +162,9 @@ class PaymentRequestController {
           });
         }
 
-        setTimeout(function () {
-          fs.unlinkSync(filePath);
-        }, 500000)
+        // setTimeout(function () {
+        //   fs.unlinkSync(filePath);
+        // }, 500000)
         res.status(200).json({
           success: true,
           message: `Records for date range: ${startDate} - ${endDate}`,
