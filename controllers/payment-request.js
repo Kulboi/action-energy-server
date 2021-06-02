@@ -152,21 +152,26 @@ class PaymentRequestController {
       const randomStr = randomString();
       const filePath = path.join(__dirname, "..", "public", "exports", `csv-${randomStr}.csv`);
       fs.writeFile(filePath, csv, function (err) {
+        console.log(filepath)
         if (err) {
-          return res.json(err).status(500);
-        }
-        else {
-          setTimeout(function () {
-            fs.unlinkSync(filePath);
-          }, 60000)
-          res.status(200).json({
-            success: true,
-            message: `Records for date range: ${startDate} - ${endDate}`,
+          return res.status(500).json({
+            success: false,
+            message: "Internal server error",
             data: {
-              link: `/exports/csv-${randomStr}.csv`
+              message: err
             }
           });
         }
+        setTimeout(function () {
+          fs.unlinkSync(filePath);
+        }, 500000)
+        res.status(200).json({
+          success: true,
+          message: `Records for date range: ${startDate} - ${endDate}`,
+          data: {
+            link: `/exports/csv-${randomStr}.csv`
+          }
+        });
       });
     }catch (error) {
       res.status(500).json({
