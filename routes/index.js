@@ -20,6 +20,12 @@ router.post('/register', AuthCtrl.register);
 router.post('/login', AuthCtrl.login);
 router.put('/change-password/:id', validateToken, AuthCtrl.changePassword);
 
+// Dashboard Module
+const DashboardController = require('./../controllers/dashboard');
+const DashboardCtrl = new DashboardController();
+
+router.get('/dashboard/statistics', validateToken, DashboardCtrl.statistics);
+
 // User Module
 const UserController = require('./../controllers/user');
 const UserCtrl = new UserController();
