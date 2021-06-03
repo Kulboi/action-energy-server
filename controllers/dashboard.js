@@ -17,7 +17,7 @@ class DashboardController {
       ]);
       
       const projects = await ProjectModel.find({});
-      const total_expensed = projects.reduce((sum, current) => {
+      const totalExpensed = projects.reduce((sum, current) => {
         return sum + parseFloat(current.total_expensed);
       }, 0);
 
