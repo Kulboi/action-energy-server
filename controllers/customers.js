@@ -1,6 +1,9 @@
 const CustomerModel = require("./../models/customer");
 const { Validator } = require('node-input-validator');
 
+// Events module
+const callEvent = require('./../events');
+
 class CustomerController {
   async add(req, res) {
     try {
@@ -32,6 +35,13 @@ class CustomerController {
       }
 
       const addCustomer = await CustomerModel.create(req.body);
+      await callEvent({
+        eventType: 'record:create',
+        payload: {
+          type: 'customer',
+          payload: req.body
+        }
+      })
       res.status(201).json({
         success: true,
         message: "Customer registeration successful",

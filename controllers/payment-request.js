@@ -5,6 +5,9 @@ const json2csv = require('json2csv').parse;
 const fs = require('fs');
 const randomString = require('./../helpers/randomString');
 
+// Events module
+const callEvent = require('./../events');
+
 class PaymentRequestController {
   async add(req, res) {
     try {
@@ -25,6 +28,13 @@ class PaymentRequestController {
       }
 
       const addRequest = await PaymentRequestModel.create(req.body);
+      await callEvent({
+        eventType: 'record:create',
+        payload: {
+          type: 'payment-request',
+          payload: req.body
+        }
+      })
       res.status(201).json({
         success: true,
         message: "Request recorded successfully",

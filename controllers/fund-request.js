@@ -1,6 +1,9 @@
 const FundRequestModel = require("../models/fund-request");
 const { Validator } = require('node-input-validator');
 
+// Events module
+const callEvent = require('./../events');
+
 class FundRequestController {
   async add(req, res) {
     try {
@@ -25,6 +28,13 @@ class FundRequestController {
       }
 
       const addRequest = await FundRequestModel.create(req.body);
+      await callEvent({
+        eventType: 'record:create',
+        payload: {
+          type: 'fund-request',
+          payload: req.body
+        }
+      })
       res.status(201).json({
         success: true,
         message: "Fund request recorded",

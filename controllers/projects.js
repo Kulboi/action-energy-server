@@ -1,6 +1,9 @@
 const ProjectModel = require("./../models/project");
 const { Validator } = require('node-input-validator');
 
+// Events module
+const callEvent = require('./../events');
+
 class ProjectController {
   async add(req, res) {
     try {
@@ -35,6 +38,13 @@ class ProjectController {
       }
 
       const addProject = await ProjectModel.create(req.body);
+      await callEvent({
+        eventType: 'record:create',
+        payload: {
+          type: 'project',
+          payload: req.body
+        }
+      })
       res.status(201).json({
         success: true,
         message: "Project creation successful",

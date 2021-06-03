@@ -5,6 +5,9 @@ const json2csv = require('json2csv').parse;
 const fs = require('fs');
 const randomString = require('./../helpers/randomString');
 
+// Events module
+const callEvent = require('./../events');
+
 class SitePurchaseController {
   async add(req, res) {
     try {
@@ -28,6 +31,13 @@ class SitePurchaseController {
       }
 
       const addRecord = await SitePurchaseModel.create(req.body);
+      await callEvent({
+        eventType: 'record:create',
+        payload: {
+          type: 'purchase-request',
+          payload: req.body
+        }
+      })
       res.status(201).json({
         success: true,
         message: "Recorded successfully",
