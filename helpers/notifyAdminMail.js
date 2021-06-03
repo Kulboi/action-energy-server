@@ -61,7 +61,7 @@ const handleDisbursementMail = async (payload)=> {
     to: adminMail,
     from: 'mail@geefto.com',
     subject: 'NEW DISBURSEMENT RECORDED',
-    body: `
+    html: `
       <h3>A new disbursement has been created with the following details:</h3>
       <br /><br />
       <ul>

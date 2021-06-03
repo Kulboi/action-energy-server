@@ -1,13 +1,11 @@
 const DisbursementModel = require("./../models/disbursement");
 const ProjectModel = require("./../models/project");
 const { Validator } = require("node-input-validator");
-const events = require('events'); 
+
+// Events module
+const callEvent = require('./../events');
 
 class DisbursementController {
-  constructor() {
-    this.eventsEmitter = new events.EventEmitter();
-  }
-
   async add(req, res) {
     try {
       const v = new Validator(req.body, {
@@ -29,11 +27,17 @@ class DisbursementController {
       }
 
       const addItem = await DisbursementModel.create(req.body);
-      this.eventsEmitter.emit('disbursements:create', req.body);
-      this.eventsEmitter.emit('record:create', {
-        type: 'disbursement',
+      await callEvent({
+        eventType: 'disbursements:create',
         payload: req.body
-      });
+      })
+      await callEvent({
+        eventType: 'record:create',
+        payload: {
+          type: 'disbursement',
+          payload: req.body
+        }
+      })
       res.status(201).json({
         success: true,
         message: "Disbursement recorded successful",
