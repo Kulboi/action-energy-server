@@ -40,6 +40,27 @@ class DashboardController {
       throw new Error(error);
     }
   }
+
+  async projectsProfits(req, res) {
+    try {
+      const allProjects = await ProjectModel
+      .find({})
+      .select('ref_no available_balance -_id');
+
+      res.status(200).json({
+        success: false,
+        message: "Dashboard statistics",
+        data: allProjects
+      });
+    }catch (error) {
+      res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: []
+      });
+      throw new Error(error);
+    }
+  }
 }
 
 module.exports = DashboardController;

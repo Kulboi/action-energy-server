@@ -25,6 +25,7 @@ const DashboardController = require('./../controllers/dashboard');
 const DashboardCtrl = new DashboardController();
 
 router.get('/dashboard/statistics', validateToken, DashboardCtrl.statistics);
+router.get('/dashboard/projects-profit', validateToken, DashboardCtrl.projectsProfits);
 
 // User Module
 const UserController = require('./../controllers/user');
