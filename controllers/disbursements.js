@@ -5,7 +5,7 @@ const events = require('events');
 
 class DisbursementController {
   constructor() {
-    const eventsEmitter = new events.EventEmitter();
+    this.eventsEmitter = new events.EventEmitter();
   }
 
   async add(req, res) {
