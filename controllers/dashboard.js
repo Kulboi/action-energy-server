@@ -6,6 +6,7 @@ class DashboardController {
     try {
       const totalCustomers = CustomerModel.countDocuments({});
       const totalProjects = ProjectModel.countDocuments({});
+      
       const totalInflow = await ProjectModel.aggregate([
         {
           $group: {
@@ -14,7 +15,9 @@ class DashboardController {
           }
         }
       ]);
-      const totalExpensed = projects.reduce((sum, current) => {
+      
+      const projects = await ProjectModel.find({});
+      const total_expensed = projects.reduce((sum, current) => {
         return sum + parseFloat(current.total_expensed);
       }, 0);
 
