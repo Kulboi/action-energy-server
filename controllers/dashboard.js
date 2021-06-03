@@ -4,8 +4,8 @@ const ProjectModel = require("./../models/project");
 class DashboardController {
   async statistics(req, res) {
     try {
-      totalCustomers = CustomerModel.countDocuments({});
-      totalProjects = ProjectModel.countDocuments({});
+      const totalCustomers = CustomerModel.countDocuments({});
+      const totalProjects = ProjectModel.countDocuments({});
       const totalInflow = await ProjectModel.aggregate([
         {
           $group: {
