@@ -29,7 +29,7 @@ const notifyAdminMail = async ({ type, payload }) => {
   }
 };
 
-const sendMail = async () => {
+const sendMail = async (mailPayload) => {
   await sgMail.send(mailPayload).catch((error) => {
     console.error(error.response.body);
   });
