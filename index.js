@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 // Endpoints
 app.use('/', require('./routes'));
 
-app.listen(process.env.PORT, (err) => {
+app.listen(process.env.APP_SERVER_PORT, (err) => {
   if (err) return console.log(`Error: ${err}`);
-  console.log(`Server listening on port ${process.env.PORT}`);
+  console.log(`Server listening on port ${process.env.APP_SERVER_PORT}`);
 });
