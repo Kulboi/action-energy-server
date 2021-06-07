@@ -60,6 +60,8 @@ router.route('/projects')
   .get(validateToken, ProjectCtrl.all)
   .put(validateToken, ProjectCtrl.update);
 
+router.route('/project/:projectId')
+  .get(validateToken, ProjectCtrl.single)
 router.route('/projects/search')
   .get(validateToken, ProjectCtrl.search)
 router.route('/projects/statistics')

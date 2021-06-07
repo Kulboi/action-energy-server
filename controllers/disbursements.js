@@ -58,11 +58,17 @@ class DisbursementController {
       const { projectId, limit, page } = req.query;
 
       const project = await ProjectModel.find({ _id: projectId });
-      if(project.actual_inflow === 0) {
+
+      if(project[0].actual_inflow == 0) {
         return res.status(200).json({
           success: true,
           message: "No actual inflow recorded",
-          data: []
+          data: {
+            payload: [],
+            count: 0,
+            actual_inflow: project[0]?.actual_inflow,
+            available_balance: project[0]?.available_balance
+          }
         });
       }
 
@@ -77,8 +83,8 @@ class DisbursementController {
         data: {
           payload: disbursements, 
           count: await DisbursementModel.countDocuments({ 'project._id': projectId }),
-          actual_inflow: project[0].actual_inflow,
-          available_balance: project[0].available_balance
+          actual_inflow: project[0]?.actual_inflow,
+          available_balance: project[0]?.available_balance
         }
       });
     } catch (error) {
@@ -112,6 +118,10 @@ class DisbursementController {
   async remove(req, res) {
     try {
       await DisbursementModel.deleteOne({ _id: req.query.id });
+      await callEvent({
+        eventType: 'disbursements:delete',
+        payload: req.body
+      });
       res.status(200).json({
         success: true,
         message: "Disbursement record deleted",

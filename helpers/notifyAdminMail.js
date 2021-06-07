@@ -42,7 +42,7 @@ const handleCustomerMail = async (payload) => {
     to: adminMail,
     from: "mail@geefto.com",
     subject: "NEW CUSTOMER REGISTERED",
-    body: `
+    html: `
       <h3>A new customer has been registered with the following details:</h3>
       <br /><br />
       <ul>
@@ -62,7 +62,7 @@ const handleProjectMail = async (payload) => {
     to: adminMail,
     from: "mail@geefto.com",
     subject: "NEW PROJECT CREATED",
-    body: `
+    html: `
       <h3>A new project has been created with the following details:</h3>
       <br /><br />
       <ul>

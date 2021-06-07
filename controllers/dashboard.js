@@ -27,7 +27,7 @@ class DashboardController {
         data: {
           totalCustomers,
           totalProjects,
-          totalInflow: totalInflow[0].count,
+          totalInflow: totalInflow[0]?.count,
           totalExpensed
         }
       });

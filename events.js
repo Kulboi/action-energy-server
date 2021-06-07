@@ -11,22 +11,40 @@ const eventsEmitter = new events.EventEmitter();
   - Calculate total_expensed
   - Update project details with the new details
 */
-eventsEmitter.on('disbursements:create', async(payload)=> { 
+eventsEmitter.on('disbursements:create', async(payload)=> {
   const project = await ProjectModel.find({ _id: payload.project._id });
 
-  const currentBalance = parseFloat(project.available_balance) - parseFloat(payload.amount);
+  const currentBalance = parseFloat(project[0].available_balance) - parseFloat(payload.amount);
   
   let total_expensed
-  if(project.total_expensed === 0) {
+  if(!project[0].total_expensed || project[0].total_expensed === 0) {
     total_expensed = parseFloat(payload.amount);
   }else {
-    total_expensed = parseFloat(project.total_expensed) + parseFloat(payload.amount);
+    total_expensed = parseFloat(project[0].total_expensed) + parseFloat(payload.amount);
   }
   
   await ProjectModel.updateOne({ _id: payload.project._id }, { 
     available_balance: currentBalance,
     total_expensed
   });
+});
+
+eventsEmitter.on('disbursements:delete', async(payload)=> {
+  // const project = await ProjectModel.find({ _id: payload.project._id });
+
+  // const currentBalance = parseFloat(project[0].available_balance) - parseFloat(payload.amount);
+  
+  // let total_expensed
+  // if(!project[0].total_expensed || project[0].total_expensed === 0) {
+  //   total_expensed = parseFloat(payload.amount);
+  // }else {
+  //   total_expensed = parseFloat(project[0].total_expensed) + parseFloat(payload.amount);
+  // }
+  
+  // await ProjectModel.updateOne({ _id: payload.project._id }, { 
+  //   available_balance: currentBalance,
+  //   total_expensed
+  // });
 });
 
 // On record create event

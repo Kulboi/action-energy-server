@@ -86,6 +86,26 @@ class ProjectController {
     }
   }
 
+  async single(req, res) {
+    try {
+      const { projectId } = req.params;
+      const project = await ProjectModel.find({ _id: projectId });
+    
+      res.status(200).json({
+        success: true,
+        message: "Project details",
+        data: project[0]
+      });
+    }catch(error) {
+      res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: []
+      });
+      throw new Error(error);
+    }
+  }
+
   async search(req, res) {
     try {
       const { query, limit } = req.query;
@@ -134,7 +154,7 @@ class ProjectController {
         message: "Projects statistics",
         data: {
           total_projects,
-          total_inflow: total_inflow[0].count,
+          total_inflow: total_inflow[0]?.count,
           total_expensed
         }
       });
