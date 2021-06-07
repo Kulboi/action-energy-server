@@ -117,11 +117,14 @@ class DisbursementController {
 
   async remove(req, res) {
     try {
-      await DisbursementModel.deleteOne({ _id: req.query.id });
       await callEvent({
         eventType: 'disbursements:delete',
-        payload: req.body
+        payload: {
+          id: req.query.id
+        }
       });
+      await DisbursementModel.deleteOne({ _id: req.query.id });
+      
       res.status(200).json({
         success: true,
         message: "Disbursement record deleted",

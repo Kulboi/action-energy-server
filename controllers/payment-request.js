@@ -14,7 +14,7 @@ class PaymentRequestController {
       const v = new Validator(req.body, {
         date: 'required',
         payee: 'required',
-        site_number: 'required',
+        // site_number: 'required',
         amount: 'required',
         type: 'required'
       });

@@ -19,7 +19,6 @@ class SitePurchaseController {
         amount: 'required',
         project: 'required|object',
         payee: 'required',
-        type: 'required'
       });
       const validate = await v.check();
       if(!validate) {
@@ -60,11 +59,6 @@ class SitePurchaseController {
       .find()
       .limit(parseInt(limit))
       .skip((parseInt(page) - 1) * parseInt(limit));
-
-      console.log({ 
-        payload: requests, 
-        count: await SitePurchaseModel.countDocuments({}) 
-      })
 
       res.status(200).json({
         success: true,
