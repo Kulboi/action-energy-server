@@ -12,11 +12,12 @@ class PaymentRequestController {
   async add(req, res) {
     try {
       const v = new Validator(req.body, {
-        date: 'required',
+        site: 'required',
+        site_number: 'required',
+        purposes: 'required|array',
         payee: 'required',
-        // site_number: 'required',
-        amount: 'required',
-        type: 'required'
+        bank: 'required',
+        account_number: 'required',
       });
       const validate = await v.check();
       if(!validate) {
@@ -27,7 +28,10 @@ class PaymentRequestController {
         });
       }
 
-      const addRequest = await PaymentRequestModel.create(req.body);
+      const addRequest = await PaymentRequestModel.create({
+        ...req.body,
+        created_by: req.user
+      });
       await callEvent({
         eventType: 'record:create',
         payload: {
@@ -54,7 +58,7 @@ class PaymentRequestController {
     try {
       const { limit, page } = req.query;
       const requests = await PaymentRequestModel
-      .find()
+      .find({ 'created_by.user': req.user.user })
       .limit(parseInt(limit))
       .skip((parseInt(page) - 1) * parseInt(limit));
 

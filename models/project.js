@@ -25,7 +25,8 @@ const projectSchema = new Schema({
   total_expensed: {
     type: String,
     default: 0
-  }
+  },
+  status: String
 }, 
 { timestamps: true });
 

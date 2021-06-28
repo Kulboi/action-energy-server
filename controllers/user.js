@@ -1,4 +1,6 @@
 const UserModel = require("./../models/user");
+const bcrypt = require('bcrypt');
+const { Validator } = require('node-input-validator');
 
 class UserController {
   async addUser(req, res) {
@@ -28,11 +30,13 @@ class UserController {
         });
       }
 
-      const addUser = await UserModel.create(req.body);
+      const salt = await bcrypt.genSalt(10);
+      const password = await bcrypt.hash("password", salt);
+      const addUser = await UserModel.create({ ...req.body, password });
       res.status(201).json({
         success: true,
-        message: "User registeration successful",
-        data: addCustomer
+        message: "User added successful",
+        data: addUser
       })
     }catch(error) {
       res.status(500).json({
@@ -102,11 +106,16 @@ class UserController {
     try {
       const userId = req.params.id;
 
-      await UserModel.findByIdAndUpdate(userId, req.body);
+      const userUpdate = await UserModel.findByIdAndUpdate(userId, req.body);
       res.status(200).json({
         success: true,
         message: "Updated user's details",
-        data: req.body
+        data: {
+          id: userUpdate._id,
+          fullname: userUpdate.fullname,
+          email: userUpdate.email,
+          role: userUpdate.role
+        }
       });
     }catch(error) {
       res.status(500).json({
