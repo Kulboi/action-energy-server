@@ -8,7 +8,8 @@ const disbursementSchema = new Schema({
   reason: String,
   date: Date,
   amount: String,
-  approval_doc_url: String
+  approval_doc_url: String,
+  status: String
 }, 
 { timestamps: true });
 

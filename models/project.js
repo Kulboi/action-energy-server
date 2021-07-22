@@ -6,26 +6,28 @@ const projectSchema = new Schema({
   award_date: Date,
   description: String,
   company_name: String,
-  agency: Object,
+  agency: String,
   location: String,
-  award_amount: Number,
   brief_of_summary: {
     description: String,
     file_path: String
   },
-  deductables: Array,
-  available_balance: {
+  statutory_deductions: Array,
+  other_deductions: Array,
+  available_balance: Number,
+  award_amount: Number,
+  actual_inflow: Number,
+  total_statutory_deductions: Number,
+  total_deductions: Number,
+  anticipated_inflow: Number,
+  anticipated_profit: Number,
+  anticipated_profit_percentage: Number,
+  status: {
     type: String,
-    default: 0
+    default: 'pending'
   },
-  actual_inflow: {
-    type: String,
-    default: 0
-  },
-  total_expensed: {
-    type: String,
-    default: 0
-  }
+  approval_details: Array,
+  created_by: Object,
 }, 
 { timestamps: true });
 

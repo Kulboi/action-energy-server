@@ -9,14 +9,13 @@ class FundRequestController {
     try {
       const v = new Validator(req.body, {
         date: 'required',
-        requester: 'required',
-        approver: 'required',
-        company: 'required',
-        ministry: 'required',
+        requester: 'required|object',
         project: 'required|object',
-        location: 'required',
-        description: 'required',
-        amount: 'required',
+        amount_requested: 'required',
+        bank: 'required',
+        account_name: 'required',
+        account_number: 'required',
+        payments: 'required|array',
       });
       const validate = await v.check();
       if(!validate) {

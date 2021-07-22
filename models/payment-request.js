@@ -2,11 +2,19 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const paymentRequestSchema = new Schema({
-  date: Date,
-  payee: String,
+  site: String,
   site_number: String,
-  amount: Number,
-  type: String,
+  purposes: Array,
+  payee: String,
+  bank: String,
+  account_number: String,
+  attachement: String,
+  status: {
+    type: String,
+    default: 'pending'
+  },
+  approval_details: Array,
+  created_by: Object
 }, 
 { timestamps: true });
 

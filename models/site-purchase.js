@@ -10,6 +10,12 @@ const sitePurchaseSchema = new Schema({
   project: Object,
   payee: String,
   type: String,
+  status: {
+    type: String,
+    default: 'pending'
+  },
+  approval_details: Array,
+  created_by: Object
 }, 
 { timestamps: true });
 

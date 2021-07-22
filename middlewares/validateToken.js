@@ -18,6 +18,13 @@ const validateToken = async (req, res, next)=> {
         });
       }
 
+      req.user = {
+        id: result.id,
+        user: result.user,
+        email: result.email,
+        role: result.role,
+        department: result.department
+      };
       next();
     }else {
       res.status(401).send({

@@ -55,7 +55,9 @@ class UserController {
             const payload = { 
               id: user._id,
               user: user.fullname,
-              email: user.email 
+              email: user.email,
+              role: user.role,
+              department: user.department
             };
             const options = { 
               expiresIn: '2d', 
@@ -72,6 +74,7 @@ class UserController {
                 fullname: user.fullname,
                 email: user.email,
                 role: user.role,
+                department: user.department,
                 id: user._id
               }
             });

@@ -9,9 +9,10 @@ const userSchema = new Schema({
 	password: String,
 	role: {
 		type: String,
-		default: 'ADMIN',
-		enum: ['ADMIN', 'MD', 'PROJECT_MANAGER', 'AUDITOR', 'USER']
-	}
+		enum: ['USER', 'PROJECT_MANAGER', 'AUDITOR', 'CFO', 'ADMIN'],
+		default: 'USER'
+	},
+	department: String
 });
 
 const User = mongoose.model("user", userSchema);
