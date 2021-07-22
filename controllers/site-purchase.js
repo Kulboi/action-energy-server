@@ -29,7 +29,10 @@ class SitePurchaseController {
         });
       }
 
-      const addRecord = await SitePurchaseModel.create(req.body);
+      const addRecord = await SitePurchaseModel.create({
+        ...req.body,
+        created_by: req.user
+      });
       await callEvent({
         eventType: 'record:create',
         payload: {
@@ -56,7 +59,7 @@ class SitePurchaseController {
     try {
       const { limit, page } = req.query;
       const requests = await SitePurchaseModel
-      .find()
+      .find({ 'created_by.user': req.user.user })
       .limit(parseInt(limit))
       .skip((parseInt(page) - 1) * parseInt(limit));
 

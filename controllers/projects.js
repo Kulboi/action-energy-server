@@ -12,11 +12,18 @@ class ProjectController {
         award_date: 'required',
         description: 'required',
         company_name: 'required',
-        agency: 'required|object',
+        agency: 'required',
         location: 'required',
-        award_amount: 'required',
         brief_of_summary: 'required|object',
-        deductables: 'required|array'
+        statutory_deductions: 'required|array',
+        other_deductions: 'required|array',
+        award_amount: 'required|number',
+        actual_inflow: 'required|number',
+        total_statutory_deductions: 'required|number',
+        total_deductions: 'required|number',
+        anticipated_inflow: 'required|number',
+        anticipated_profit: 'required|number',
+        anticipated_profit_percentage: 'required|number',
       });
       const validate = await v.check();
       if(!validate) {
@@ -37,7 +44,10 @@ class ProjectController {
         })
       }
 
-      const addProject = await ProjectModel.create(req.body);
+      const addProject = await ProjectModel.create({
+        ...req.body,
+        created_by: req.user
+      });
       await callEvent({
         eventType: 'record:create',
         payload: {
