@@ -40,7 +40,7 @@ const validateToken = async (req, res, next)=> {
       message: "Internal server error",
       data: []
     });
-    // throw new Error(error);
+    console.log(error)
   }
 };
 

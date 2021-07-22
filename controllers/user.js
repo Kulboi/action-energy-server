@@ -1,4 +1,5 @@
 const UserModel = require("./../models/user");
+const { Validator } = require('node-input-validator');
 
 class UserController {
   async addUser(req, res) {
@@ -32,7 +33,7 @@ class UserController {
       res.status(201).json({
         success: true,
         message: "User registeration successful",
-        data: addCustomer
+        data: addUser
       })
     }catch(error) {
       res.status(500).json({

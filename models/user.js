@@ -9,7 +9,8 @@ const userSchema = new Schema({
 	password: String,
 	role: {
 		type: String,
-		default: 'admin'
+		default: 'ADMIN',
+		enum: ['ADMIN', 'MD', 'PROJECT_MANAGER', 'AUDITOR', 'USER']
 	}
 });
 

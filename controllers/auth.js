@@ -6,14 +6,14 @@ const { Validator } = require('node-input-validator');
 class UserController {
   async register(req, res) {
     try {
-      let { fullname, email, password } = req.body;
+      let { fullname, email, password, role } = req.body;
 
       const existing = await UserModel.find({ email });
       if(!existing.length) {
         const salt = await bcrypt.genSalt(10);
         password = await bcrypt.hash(password, salt);
         
-        const register = await UserModel.create({ fullname, email, password });
+        const register = await UserModel.create({ fullname, email, password, role });
         res.status(201).json({
           success: true,
           message: "User registeration successful",
