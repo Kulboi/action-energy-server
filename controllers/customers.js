@@ -53,7 +53,7 @@ class CustomerController {
         message: "Internal server error",
         data: []
       });
-      throw new Error(error);
+      console.error(error);
     }
   }
 
@@ -79,7 +79,7 @@ class CustomerController {
         message: "Internal server error",
         data: []
       });
-      throw new Error(error);
+      console.error(error);
     }
   }
 

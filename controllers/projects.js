@@ -12,7 +12,7 @@ class ProjectController {
         award_date: 'required',
         description: 'required',
         company_name: 'required',
-        agency: 'required|object',
+        agency: 'required',
         location: 'required',
         award_amount: 'required',
         brief_of_summary: 'required|object',
