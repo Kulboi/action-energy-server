@@ -27,7 +27,7 @@ const projectSchema = new Schema({
     default: 'pending'
   },
   approval_details: Array,
-  created_by: Object
+  created_by: Object,
 }, 
 { timestamps: true });
 
