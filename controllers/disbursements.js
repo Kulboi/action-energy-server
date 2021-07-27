@@ -97,6 +97,19 @@ class DisbursementController {
     }
   }
 
+  async details(req, res) {
+    try {
+      
+    }catch(error) {
+      res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        data: [],
+      });
+      console.log(error);
+    }
+  }
+
   async update(req, res) {
     try {
       await DisbursementModel.updateOne({ _id: req.query.id }, req.body);

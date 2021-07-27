@@ -19,9 +19,12 @@ app.use(function (req, res, next) {
   next()
 });
 
-mongoose.Promise = global.Promise;
-console.log(process.env.DB_URL)
-mongoose.connect(process.env.DB_URL, { useNewUrlParser: true });
+try {
+  mongoose.Promise = global.Promise;
+  mongoose.connect(process.env.DB_URL, { useNewUrlParser: true });
+}catch(error) {
+  console.log(error);
+}
 
 app.use(bodyParser.json());
 

@@ -17,13 +17,13 @@ class ProjectController {
         brief_of_summary: 'required|object',
         statutory_deductions: 'required|array',
         other_deductions: 'required|array',
-        award_amount: 'required|number',
-        actual_inflow: 'required|number',
-        total_statutory_deductions: 'required|number',
-        total_deductions: 'required|number',
-        anticipated_inflow: 'required|number',
-        anticipated_profit: 'required|number',
-        anticipated_profit_percentage: 'required|number',
+        award_amount: 'required',
+        actual_inflow: 'required',
+        total_statutory_deductions: 'required',
+        total_deductions: 'required',
+        anticipated_inflow: 'required',
+        anticipated_profit: 'required',
+        anticipated_profit_percentage: 'required',
       });
       const validate = await v.check();
       if(!validate) {
